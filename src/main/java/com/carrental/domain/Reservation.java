@@ -44,4 +44,15 @@ public class Reservation {
         }
         status = ReservationStatus.COMPLETED;
     }
+
+    public void cancel() {
+        if (status != ReservationStatus.CREATED && status != ReservationStatus.CONFIRMED) {
+            throw new IllegalStateException("Cannot cancel reservation in status: " + status);
+        }
+        status = ReservationStatus.CANCELLED;
+    }
+
+    public ReservationStatus getStatus() {
+        return status;
+    }
 }
