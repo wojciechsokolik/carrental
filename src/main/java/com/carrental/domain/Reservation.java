@@ -55,4 +55,12 @@ public class Reservation {
     public ReservationStatus getStatus() {
         return status;
     }
+
+    public RentalPeriod getRentalPeriod() {
+        return rentalPeriod;
+    }
+
+    public Car getCar() {
+        return car;
+    }
 }
