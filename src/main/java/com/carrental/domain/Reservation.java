@@ -67,4 +67,12 @@ public class Reservation {
     public BigDecimal getPrice() {
         return price;
     }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public Client getClient() {
+        return client;
+    }
 }

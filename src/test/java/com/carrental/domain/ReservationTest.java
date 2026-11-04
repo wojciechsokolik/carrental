@@ -15,7 +15,7 @@ public class ReservationTest {
     private Reservation createReservation() {
         Branch branch = new Branch("WAW", "Warsaw");
         Car car = new Car("WA12345", CarCategory.ECONOMY, branch);
-        Client client = new Client("Jan", "Kowalski");
+        Client client = new Client("Jan", "Kowalski", "jankowalski@gmail.com");
 
         RentalPeriod period = new RentalPeriod(
                 LocalDate.of(2026, 11, 10),

@@ -17,7 +17,7 @@ public class AvailabilityServiceTest {
     private final AvailabilityService availabilityService = new AvailabilityService();
 
     private Reservation createReservation(Car car, RentalPeriod period) {
-        Client client = new Client("Jan", "Kowalski");
+        Client client = new Client("Jan", "Kowalski", "jankowalski@gmail.com");
 
         return new Reservation(
                 client,

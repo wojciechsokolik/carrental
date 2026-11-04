@@ -14,12 +14,16 @@ public class ReservationService {
     private final List<Car> cars = new ArrayList<>();
     private final List<Reservation> reservations = new ArrayList<>();
 
+    private final NotificationService notificationService;
+
     public ReservationService(
             AvailabilityService availabilityService,
-            PricingService pricingService
+            PricingService pricingService,
+            NotificationService notificationService
     ) {
         this.availabilityService = Objects.requireNonNull(availabilityService);
         this.pricingService = Objects.requireNonNull(pricingService);
+        this.notificationService = Objects.requireNonNull(notificationService);
     }
 
     public void addCar(Car car) {
@@ -54,6 +58,8 @@ public class ReservationService {
         Reservation reservation = new Reservation(client, availableCar, period, price);
 
         reservations.add(reservation);
+
+        notificationService.sendReservationConfirmation(reservation);
 
         return reservation;
     }

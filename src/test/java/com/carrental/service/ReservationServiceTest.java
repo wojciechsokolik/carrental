@@ -31,11 +31,12 @@ public class ReservationServiceTest {
 
         reservationService = new ReservationService(
                 new AvailabilityService(),
-                pricingService
+                pricingService,
+                new EmailNotificationService()
         );
 
         branch = new Branch("WAW", "Warsaw");
-        client = new Client("Jan", "Kowalski");
+        client = new Client("Jan", "Kowalski", "jankowalski@gmail.com");
 
         car1 = new Car("WA12345", CarCategory.ECONOMY, branch);
         car2 = new Car("WA67890", CarCategory.ECONOMY, branch);
