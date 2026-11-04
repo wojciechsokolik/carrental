@@ -63,4 +63,8 @@ public class Reservation {
     public Car getCar() {
         return car;
     }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
 }
