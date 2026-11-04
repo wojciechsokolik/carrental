@@ -1,6 +1,7 @@
 package com.carrental.service;
 
 import com.carrental.domain.CarCategory;
+import com.carrental.domain.PromoCode;
 import com.carrental.domain.RentalPeriod;
 import com.carrental.domain.RentalRateCatalog;
 
@@ -14,6 +15,7 @@ public class PricingService {
 
     private final List<PricingRule> pricingRules;
 
+    private final PromoCodeRule promoCodeRule = new PromoCodeRule();
     private final MinimumPriceRule minimumPriceRule = new MinimumPriceRule();
 
     public PricingService(RentalRateCatalog rentalRateCatalog, List<PricingRule> pricingRules) {
@@ -27,8 +29,20 @@ public class PricingService {
     }
 
     public BigDecimal calculateFinalPrice(CarCategory category, RentalPeriod period) {
+        return calculateFinalPrice(category, period, null);
+    }
+
+    public BigDecimal calculateFinalPrice(CarCategory category, RentalPeriod period, PromoCode promoCode) {
+        BigDecimal dailyRate = rentalRateCatalog.getDailyRate(category);
         BigDecimal basePrice = calculateBasePrice(category, period);
-        PricingContext context = new PricingContext(category, period, rentalRateCatalog.getDailyRate(category), basePrice);
+
+        PricingContext context = new PricingContext(
+                category,
+                period,
+                dailyRate,
+                basePrice,
+                promoCode
+        );
 
         BigDecimal currentPrice = basePrice;
 
@@ -36,6 +50,7 @@ public class PricingService {
             currentPrice = rule.apply(currentPrice, context);
         }
 
+        currentPrice = promoCodeRule.apply(currentPrice, context);
         currentPrice = minimumPriceRule.apply(currentPrice, context);
 
         return currentPrice.setScale(2, RoundingMode.HALF_UP);

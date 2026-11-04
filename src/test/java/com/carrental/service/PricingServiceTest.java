@@ -102,4 +102,29 @@ public class PricingServiceTest {
         // Assert
         assertEquals(new BigDecimal("420.00"), actualPrice);
     }
+
+    @Test
+    void shouldEnforceMinimumPriceAfterPromoDiscount() {
+        // Arrange
+        RentalPeriod period = new RentalPeriod(
+                LocalDate.of(2026, 10, 12),
+                LocalDate.of(2026, 10, 16)
+        );
+
+        PromoCode promo = new PromoCode(
+                "PROMO50",
+                DiscountType.PERCENTAGE,
+                new BigDecimal("50")
+        );
+
+        // Act
+        BigDecimal actualPrice = pricingService.calculateFinalPrice(
+                CarCategory.ECONOMY,
+                period,
+                promo
+        );
+
+        // Assert
+        assertEquals(new BigDecimal("420.00"), actualPrice);
+    }
 }
